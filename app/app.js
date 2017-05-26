@@ -1,4 +1,4 @@
-var bookSellingApp = angular.module('bookSellingApp', ['ngMaterial', 'ngMessages', 'ui.router']); //ngRoute
+var bookSellingApp = angular.module('bookSellingApp', ['ngMaterial', 'ngMessages', 'ui.router', 'ngFileUpload']); //ngRoute
 
 bookSellingApp.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');

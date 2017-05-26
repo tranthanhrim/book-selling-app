@@ -1,4 +1,4 @@
-<md-dialog style="width: 700px;" ng-init="vm.init()" style="z-index: 1000;">
+<md-dialog class="custom-large-dialog" ng-init="vm.init()">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools admin-bg-common">
@@ -10,20 +10,35 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content>
+    <md-dialog-content style="margin-bottom: 15px;">
       <div layout="column" style="margin-top: 20px;">
-        <md-input-container style="margin: 5px 10px;">
-          <label>Name</label>
-          <input ng-model="vm.product.name" ng-disabled="vm.isEditMode"/>
-        </md-input-container>
-        <md-input-container style="margin: 5px 10px;">
+        <div layout="row">
+          <md-input-container flex="50">
+            <label>Book Title</label>
+            <input ng-model="vm.product.title" ng-disabled="vm.isEditMode" />
+          </md-input-container>
+          <md-input-container flex="35">
+            <label>Book Author</label>
+            <input ng-model="vm.product.author" ng-disabled="vm.isEditMode" />
+          </md-input-container flex="15">
+          <md-input-container>
+            <label>Price (USD)</label>
+            <input type="number" ng-model="vm.product.price" ng-disabled="vm.isEditMode" />
+          </md-input-container>
+        </div>
+        <md-input-container>
           <label>Description</label>
           <textarea rows="3" ng-model="vm.product.description" ng-disabled="vm.isEditMode"></textarea>
         </md-input-container>
-        <md-input-container style="margin: 5px 10px;">
-          <label>Price (USD)</label>
-          <input type="number" ng-model="vm.product.price" ng-disabled="vm.isEditMode"/>
-        </md-input-container>
+        <div class="add-image-placeholder" ng-show="!vm.isImagePicked">
+          <img src="images/add-image-placeholder.jpg" ngf-select="vm.uploadImage($file)" ng-model="vm.product.cover" name="file" ngf-pattern="'image/*'"
+            ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 300, height: 425}">
+        </div>
+        <div>
+          <div style="display: inline-block; position: relative; width:112px; height: 112px; margin: 5px 10px;" ng-show="vm.isImagePicked">
+            <i class="material-icons" style="vertical-align: top; position: absolute; right: 0px; cursor: pointer;" ng-click="vm.unSelectImage()">cancel</i>
+            <img ngf-src="vm.imageUpload" style="width: 100px; margin-top: 12px; margin-right: 12px;" ngf-no-object-url="true"></div>
+        </div>
       </div>
     </md-dialog-content>
 

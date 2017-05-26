@@ -24,8 +24,11 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+
   <script src="./js/angular-ui-router.min.js"></script>
   <script src="./js/underscore-min.js"></script>
+  <script src="./js/ng-file-upload-shim.min.js"></script>
+  <script src="./js/ng-file-upload.min.js"></script>
 
   <link rel="stylesheet" href="./styles.css">
 </head>
@@ -39,6 +42,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
   <script type="text/javascript" src="./app.js"></script>
   <script type="text/javascript" src="./vendor.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+  <script>
+    var config = {
+      apiKey: "AIzaSyAPwwrzomlBsmLas0eOIIFlUPT_v0hS8e4",
+      authDomain: "luminous-inferno-3794.firebaseapp.com",
+      databaseURL: "https://luminous-inferno-3794.firebaseio.com",
+      projectId: "luminous-inferno-3794",
+      storageBucket: "luminous-inferno-3794.appspot.com",
+      messagingSenderId: "193362867356"
+    };
+    firebase.initializeApp(config);
+  </script>
 </body>
 
 </html>
