@@ -1,0 +1,37 @@
+<div ng-controller="productManagementController" ng-init="vm.init()">
+  <md-button class="md-fab md-primary md-fab-bottom-right"
+  style="background-color: #3c8dbc;"
+  ng-click="vm.showDialogAddProduct($event)">
+    <md-icon md-svg-src="images/icons/ic_add_white_18px.svg"></md-icon>
+  </md-button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 40%;">Name</th>
+        <th style="width: 20%;">Description</th>
+        <th style="width: 20%;">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="product in vm.productList">
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.price}}</td>
+        <td layout="row" ng-show="vm.isLogin">
+          <div flex></div>
+          <div layout="row">
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="vm.showDetailProduct($event, product)" style="height: 24px; width: 24px; padding: 0px; min-height: 24px;">
+              <md-icon md-svg-icon="images/icons/ic_remove_red_eye_grey_18px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="vm.editProduct($event, product)" style="height: 24px; width: 24px; padding: 0px; min-height: 24px;">
+              <md-icon md-svg-icon="images/icons/ic_edit_grey_18px.svg"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Favorite" ng-click="vm.deleteProduct(product.id)" style="height: 24px; width: 24px; padding: 0px; min-height: 24px;">
+              <md-icon md-svg-icon="images/icons/ic_delete_grey_18px.svg"></md-icon>
+            </md-button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
