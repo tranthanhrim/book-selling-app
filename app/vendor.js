@@ -85,6 +85,7 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
     vm.product = new ProductTemplate();
     vm.isEditMode = false;
     vm.isDetailMode = false;
+    vm.isAddMode = false;
     vm.isImagePicked = false;
     var imageBookCover = null;
 
@@ -92,7 +93,11 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
 
     function init() {
       vm.labelAddOrUpdate = 'Add';
-      vm.isDetailMode = isDetailMode;
+      if (isDetailMode) {
+        vm.isDetailMode = true
+      } else {
+        vm.isAddMode = true;
+      }
       if (product != null) {
         vm.product = angular.copy(product);
       }
@@ -120,6 +125,8 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
 
     function activateEditMode() {
       vm.isEditMode = true;
+      vm.isDetailMode = false;
+      vm.isAddMode = false;
     }
 
     function addNewProduct() {

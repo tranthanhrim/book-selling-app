@@ -15,20 +15,20 @@
         <div layout="row">
           <md-input-container flex="50">
             <label>Book Title</label>
-            <input ng-model="vm.product.title" ng-disabled="!vm.isEditMode" />
+            <input ng-model="vm.product.title" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode"/>
           </md-input-container>
           <md-input-container flex="35">
             <label>Book Author</label>
-            <input ng-model="vm.product.author" ng-disabled="!vm.isEditMode" />
+            <input ng-model="vm.product.author" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" />
           </md-input-container flex="15">
           <md-input-container>
             <label>Price (VND)</label>
-            <input type="number" ng-model="vm.product.price" ng-disabled="!vm.isEditMode" />
+            <input type="number" ng-model="vm.product.price" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" />
           </md-input-container>
         </div>
         <md-input-container>
           <label>Description</label>
-          <textarea rows="3" ng-model="vm.product.description" ng-disabled="!vm.isEditMode"></textarea>
+          <textarea rows="3" ng-model="vm.product.description" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode"></textarea>
         </md-input-container>
         <div class="add-image-placeholder" ng-show="!vm.isImagePicked">
           <img src="images/add-image-placeholder.jpg" ngf-select="vm.uploadImage($file)" ng-model="vm.product.cover" name="file" ngf-pattern="'image/*'"
@@ -45,16 +45,16 @@
     <md-dialog-actions layout="row">
       <span flex></span>
       <!--<i class="material-icons" style="cursor: pointer; opacity: 0.87;" ng-click="vm.activateEditMode()" ng-show="!vm.isEditMode">mode_edit</i>-->
-      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.activateEditMode()" ng-show="!vm.isEditMode">
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.activateEditMode()" ng-show="!vm.isAddMode && !vm.isEditMode">
         Edit
       </md-button>
       <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.updateProduct()" ng-show="vm.isEditMode">
         Update
       </md-button>
-      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.deleteProduct()" ng-show="vm.isDetailMode && !vm.isEditMode">
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.deleteProduct()" ng-show="vm.isDetailMode">
         Delete
       </md-button>
-      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.addNewProduct()" ng-show="!vm.isDetailMode">
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.addNewProduct()" ng-show="vm.isAddMode">
         Add
       </md-button>
     </md-dialog-actions>
