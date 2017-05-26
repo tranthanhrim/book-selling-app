@@ -1,25 +1,30 @@
 <div ng-controller="productManagementController" ng-init="vm.init()">
-  <md-button class="md-fab md-primary md-fab-bottom-right admin-bg-common"
-  ng-click="vm.showDialogAddProduct($event)">
+  <md-button class="md-fab md-primary md-fab-bottom-right admin-bg-common" ng-click="vm.showDialogAddProduct($event)">
     <md-icon md-svg-src="images/icons/ic_add_white_18px.svg"></md-icon>
   </md-button>
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 30%;">Book cover</th>
-        <th style="width: 15%;">Book title</th>
+        <th style="width: 2%;">#</th>
+        <th style="width: 15%;">Book cover</th>
+        <th style="width: 20%;">Book title</th>
         <th style="width: 10%;">Author</th>
         <th style="width: 30%;">Description</th>
         <th style="width: 10%;">Price</th>
+        <th style="width: 13%;"></th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="product in vm.productList">
-        <td>{{product.name}}</td>
+      <tr ng-repeat="product in vm.productList track by $index" ng-click="vm.showDetailProduct(product)">
+        <td>{{$index + 1}}</td>
+        <td>
+          <img ng-src="{{product.cover}}" style="width: 100px; height: 142px;"/>
+        </td>
+        <td>{{product.title}}</td>
+        <td>{{product.author}}</td>
         <td>{{product.description}}</td>
         <td>{{product.price}}</td>
-        <td layout="row" ng-show="vm.isLogin">
+        <!--<td layout="row" ng-show="vm.isLogin">
           <div flex></div>
           <div layout="row">
             <md-button class="md-icon-button" aria-label="Favorite" ng-click="vm.showDetailProduct($event, product)" style="height: 24px; width: 24px; padding: 0px; min-height: 24px;">
@@ -32,7 +37,7 @@
               <md-icon md-svg-icon="images/icons/ic_delete_grey_18px.svg"></md-icon>
             </md-button>
           </div>
-        </td>
+        </td>-->
       </tr>
     </tbody>
   </table>

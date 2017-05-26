@@ -15,15 +15,33 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
   var vm = this;
   vm.init = init;
   vm.showDialogAddProduct = showDialogAddProduct;
+  vm.showDetailProduct = showDetailProduct;
   vm.productList = [];
   function init() {
     vm.header = 'Header của page';
     vm.body = 'Nội dung page - trang 1';
+    var tempProduct1 = new ProductTemplate();
+    tempProduct1.cover = 'https://firebasestorage.googleapis.com/v0/b/luminous-inferno-3794.appspot.com/o/book-cover%2Fduong-dua-cua-nhung-giac-mo.jpg?alt=media&token=6d8585d5-7df0-4198-90dd-7bbdaeb6c174';
+    tempProduct1.title = 'Đường Đua Của Những Giấc Mơ';
+    tempProduct1.author = 'Wendelin Van Draanen';
+    tempProduct1.description = 'Đây là cuốn sách khiến bạn sẽ tin rằng: Cuộc đời gập ghềnh đá sỏi ngoài kia chẳng có thể ngăn được bước chân bạn dù những cơn giông bão luôn lăm le muốn quật ngã bạn bất cứ lúc nào.'
+    tempProduct1.price = 72000;
+
+    var tempProduct2 = new ProductTemplate();
+    tempProduct2.cover = 'https://firebasestorage.googleapis.com/v0/b/luminous-inferno-3794.appspot.com/o/book-cover%2Fcuu-thien-khuynh-ca.jpg?alt=media&token=a7f9f2f4-af69-4859-8188-1b8c45ce67ea';
+    tempProduct2.title = 'Cửu Thiên Khuynh Ca';
+    tempProduct2.author = 'Trúc Yến Tiểu Sinh';
+    tempProduct2.description = 'Mãnh liệt nhất, đớn đau nhất, say đắm nhất phải là việc nàng mở từng lớp khóa trái tim mỏng manh để đặt vào đó cái tên Trọng Uyên.';
+    tempProduct2.price = 103200;
+
+    vm.productList.push(tempProduct1);
+    vm.productList.push(tempProduct2);
   }
 
   function ProductTemplate() {
     return {
       id: -1,
+      cover: '',
       title: '',
       author: '',
       description: '',
@@ -31,7 +49,7 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
     }
   }
 
-  function showMdDialog(controller, templateUrl, event, param, isEditMode) {
+  function showMdDialog(controller, templateUrl, event, param, isDetailMode) {
     $mdDialog.show({
       controller: controller,
       controllerAs: 'vm',
@@ -41,7 +59,7 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
       clickOutsideToClose: false,
       locals: {
         product: param,
-        isEditMode: isEditMode
+        isDetailMode: isDetailMode
       }
     });
   }
@@ -50,16 +68,23 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
     showMdDialog(DialogAddNewProductController, 'module/dialog/dialog-add-new-product.html', event, null, false);
   }
 
-  function DialogAddNewProductController(product, isEditMode) {
+  function showDetailProduct(product) {
+    showMdDialog(DialogAddNewProductController, 'module/dialog/dialog-add-new-product.html', event, product, true);
+  }
+
+  function DialogAddNewProductController(product, isDetailMode) {
     var vm = this;
     vm.init = init;
     vm.uploadImage = uploadImage;
     vm.unSelectImage = unSelectImage;
     vm.cancelDialog = cancelDialog;
-    vm.addOrUpdateProduct = addOrUpdateProduct;
+    vm.addNewProduct = addNewProduct;
     vm.deleteProduct = deleteProduct;
+    vm.updateProduct = updateProduct;
+    vm.activateEditMode = activateEditMode;
     vm.product = new ProductTemplate();
     vm.isEditMode = false;
+    vm.isDetailMode = false;
     vm.isImagePicked = false;
     var imageBookCover = null;
 
@@ -67,13 +92,11 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
 
     function init() {
       vm.labelAddOrUpdate = 'Add';
-      vm.isEditMode = isEditMode;
+      vm.isDetailMode = isDetailMode;
       if (product != null) {
         vm.product = angular.copy(product);
-        vm.labelAddOrUpdate = 'Update';
       }
-
-      if (vm.isEditMode) {
+      if (vm.isDetailMode) {
         vm.labelAddOrUpdate = 'Detail';
       }
     }
@@ -95,7 +118,11 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
       vm.isImagePicked = false;
     }
 
-    function addOrUpdateProduct() {
+    function activateEditMode() {
+      vm.isEditMode = true;
+    }
+
+    function addNewProduct() {
       if (vm.product.id == -1) {
         adminService.addProduct(vm.product).then(function (result) {
           adminService.showToast($mdToast, 'Import product successful!');
@@ -117,6 +144,10 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
         $mdDialog.cancel();
         $state.reload();
       });
+    }
+
+    function updateProduct() {
+
     }
 
     function cancelDialog() {
