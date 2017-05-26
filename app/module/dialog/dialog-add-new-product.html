@@ -1,8 +1,8 @@
 <md-dialog class="custom-large-dialog" ng-init="vm.init()">
-  <form ng-cloak>
+  <ng-form name="productForm">
     <md-toolbar>
       <div class="md-toolbar-tools admin-bg-common">
-        <h2>{{vm.labelAddOrUpdate}} product</h2>
+        <h2>{{vm.dialogLabel}} product</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="vm.cancelDialog()" style="opacity: 0.87;">
           <md-icon md-svg-src="images/icons/ic_close_white_18px.svg" aria-label="Close dialog"></md-icon>
@@ -15,15 +15,31 @@
         <div layout="row">
           <md-input-container flex="50">
             <label>Book Title</label>
-            <input ng-model="vm.product.title" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode"/>
+            <input name="title" ng-model="vm.product.title" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" required/>
+            <div ng-messages="productForm.title.$error">
+              <div ng-message="required">
+                Book title cannot be blank.
+              </div>
+            </div>
           </md-input-container>
           <md-input-container flex="35">
             <label>Book Author</label>
-            <input ng-model="vm.product.author" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" />
+            <input name="author" ng-model="vm.product.author" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" required/>
+            <div ng-messages="productForm.author.$error">
+              <div ng-message="required">
+                Book Author cannot be blank.
+              </div>
+            </div>
           </md-input-container flex="15">
           <md-input-container>
             <label>Price (VND)</label>
-            <input type="number" ng-model="vm.product.price" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode" />
+            <input name="price" type="number" ng-model="vm.product.price" ng-disabled="!vm.isAddMode && !vm.isEditMode && vm.isDetailMode"
+              required/>
+            <div ng-messages="productForm.price.$error">
+              <div ng-message="required">
+                Book Price cannot be blank.
+              </div>
+            </div>
           </md-input-container>
         </div>
         <md-input-container>
@@ -36,9 +52,13 @@
         </div>
         <div>
           <div style="display: inline-block; position: relative; width:112px; height: 112px; margin: 5px 10px;" ng-show="vm.isImagePicked">
-            <i class="material-icons" style="vertical-align: top; position: absolute; right: 0px; cursor: pointer;" ng-click="vm.unSelectImage()">cancel</i>
-            <img ngf-src="vm.imageUpload" style="width: 100px; margin-top: 12px; margin-right: 12px;" ngf-no-object-url="true"></div>
+            <!--<i class="material-icons" style="vertical-align: top; position: absolute; right: 0px; cursor: pointer;" ng-click="vm.unSelectImage()">cancel</i>-->
+            <img src="images/icons/ic-cancel.png" style="vertical-align: top; position: absolute; right: 0px; cursor: pointer;" ng-click="vm.unSelectImage()"
+            />
+            <img ngf-src="vm.imageUpload" style="width: 100px; margin-top: 12px; margin-right: 12px;" ngf-no-object-url="true" required>
+          </div>
         </div>
+        <span class="label-alert-field" style="margin-left: 10px;" ng-show="vm.isAlertImageNotPicked">Book cover cannot be blank</span>
       </div>
     </md-dialog-content>
 
@@ -48,15 +68,15 @@
       <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.activateEditMode()" ng-show="!vm.isAddMode && !vm.isEditMode">
         Edit
       </md-button>
-      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.updateProduct()" ng-show="vm.isEditMode">
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.updateProduct(productForm)" ng-show="vm.isEditMode">
         Update
       </md-button>
       <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.deleteProduct()" ng-show="vm.isDetailMode">
         Delete
       </md-button>
-      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.addNewProduct()" ng-show="vm.isAddMode">
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.addNewProduct(productForm)" ng-show="vm.isAddMode">
         Add
       </md-button>
     </md-dialog-actions>
-  </form>
+  </ng-form>
 </md-dialog>

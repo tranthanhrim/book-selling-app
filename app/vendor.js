@@ -87,12 +87,13 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
     vm.isDetailMode = false;
     vm.isAddMode = false;
     vm.isImagePicked = false;
+    vm.isAlertImageNotPicked = false;
     var imageBookCover = null;
 
     var storageRef = firebase.storage().ref();
 
     function init() {
-      vm.labelAddOrUpdate = 'Add';
+      vm.dialogLabel = 'Add';
       if (isDetailMode) {
         vm.isDetailMode = true
       } else {
@@ -102,7 +103,7 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
         vm.product = angular.copy(product);
       }
       if (vm.isDetailMode) {
-        vm.labelAddOrUpdate = 'Detail';
+        vm.dialogLabel = 'Detail';
       }
     }
 
@@ -112,6 +113,7 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
         Upload.base64DataUrl(file).then(function (base64Urls) {
           vm.isImagePicked = true;
           vm.imageUpload = base64Urls;
+          vm.isAlertImageNotPicked = false;
           // firebase.storage().ref('book-cover/' + file.name).putString(base64Urls, 'data_url').then(function (snapshot) {
           // });
         });
@@ -127,22 +129,27 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
       vm.isEditMode = true;
       vm.isDetailMode = false;
       vm.isAddMode = false;
+      vm.dialogLabel = 'Edit';
     }
 
-    function addNewProduct() {
-      if (vm.product.id == -1) {
-        adminService.addProduct(vm.product).then(function (result) {
-          adminService.showToast($mdToast, 'Import product successful!');
-          $mdDialog.cancel();
-          $state.reload();
-        });
-      } else {
-        adminService.updateProduct(vm.product.id, vm.product).then(function (result) {
-          adminService.showToast($mdToast, 'Update product successful!');
-          $mdDialog.cancel();
-          $state.reload();
-        });
+    function addNewProduct(productForm) {
+      productForm.$setSubmitted();
+      if (isFormValid(productForm)) {
+
       }
+      // if (vm.product.id == -1) {
+      //   adminService.addProduct(vm.product).then(function (result) {
+      //     adminService.showToast($mdToast, 'Import product successful!');
+      //     $mdDialog.cancel();
+      //     $state.reload();
+      //   });
+      // } else {
+      //   adminService.updateProduct(vm.product.id, vm.product).then(function (result) {
+      //     adminService.showToast($mdToast, 'Update product successful!');
+      //     $mdDialog.cancel();
+      //     $state.reload();
+      //   });
+      // }
     }
 
     function deleteProduct() {
@@ -153,8 +160,20 @@ bookSellingApp.controller('productManagementController', function ($scope, $http
       });
     }
 
-    function updateProduct() {
+    function updateProduct(productForm) {
+      productForm.$setSubmitted();
+      if (isFormValid(productForm)) {
 
+      }
+    }
+
+    function isFormValid(form) {
+      if (imageBookCover == null) {
+        vm.isAlertImageNotPicked = true;
+        return false;
+      }
+      vm.isAlertImageNotPicked = false;
+      return form.$valid;
     }
 
     function cancelDialog() {

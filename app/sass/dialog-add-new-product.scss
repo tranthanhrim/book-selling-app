@@ -23,8 +23,14 @@ md-dialog-content {
 }
 
 .add-image-placeholder {
-   width:112px;
-   height:112px;
-   cursor: pointer;
-   margin: 5px 10px;
+  width:112px;
+  height:112px;
+  cursor: pointer;
+  margin: 5px 10px;
+}
+
+.label-alert-field {
+  font-size: 12px;
+  line-height: 14px;
+  color: rgb(221,44,0);
 }

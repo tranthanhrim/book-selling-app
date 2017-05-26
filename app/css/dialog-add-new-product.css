@@ -17,3 +17,8 @@ md-dialog-content md-input-container {
   height: 112px;
   cursor: pointer;
   margin: 5px 10px; }
+
+.label-alert-field {
+  font-size: 12px;
+  line-height: 14px;
+  color: #dd2c00; }
