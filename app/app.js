@@ -25,7 +25,7 @@ bookSellingApp.config(function ($stateProvider, $urlRouterProvider) {
     });;
 });
 
-bookSellingApp.factory('bookSellingService', ['$http', function ($http) {
+bookSellingApp.factory('bookSellingService', ['$http', function ($http, $mdToast) {
   var linkAPI = '';
 
   return {
@@ -37,8 +37,7 @@ bookSellingApp.factory('bookSellingService', ['$http', function ($http) {
     deleteProduct: deleteProduct,
     login: login,
     register: register,
-    showToast: showToast,
-    showMdDialog: showMdDialog
+    showToast: showToast
   }
 
   function init() {
@@ -104,26 +103,11 @@ bookSellingApp.factory('bookSellingService', ['$http', function ($http) {
   }
 
   function showToast(mdToast, message) {
-    mdToast.show(
-      mdToast.simple()
+    $mdToast.show(
+      $mdToast.simple()
         .textContent(message)
         .position('bottom right')
         .hideDelay(3000)
     );
-  }
-
-  function showMdDialog(controller, templateUrl, event, param, isEditMode) {
-    $mdDialog.show({
-      controller: controller,
-      controllerAs: 'vm',
-      templateUrl: templateUrl,
-      parent: angular.element(document.body),
-      targetEvent: event,
-      clickOutsideToClose: false,
-      locals: {
-        product: param,
-        isEditMode: isEditMode
-      }
-    });
   }
 }]);

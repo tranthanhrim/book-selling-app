@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
+var sass = require('gulp-sass');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
 var nodemon = require('gulp-nodemon');
@@ -25,6 +26,9 @@ gulp.task('watch', function () {
   gulp.watch('app/css/*.css', function () {
     runSequence('csss');
   });
+  gulp.watch('app/sass/*.scss', function () {
+    runSequence('sass');
+  });
   gulp.watch('app/*.xml', browserSync.reload);
 });
 
@@ -39,6 +43,12 @@ gulp.task('scripts', function () {
   return gulp.src('./app/module/**/*.js')
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest('./app/'));
+});
+
+gulp.task('sass', function () {
+  return gulp.src('./app/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./app/css'));
 });
 
 gulp.task('csss', function () {
@@ -58,7 +68,7 @@ gulp.task('server', function () {
 })
 
 gulp.task('default', function (callback) {
-  runSequence(['browserSync', 'scripts', 'csss'], 'watch',
+  runSequence(['browserSync', 'scripts', 'sass', 'csss'], 'watch',
     callback
   );
 });

@@ -1,15 +1,17 @@
 <div ng-controller="productManagementController" ng-init="vm.init()">
-  <md-button class="md-fab md-primary md-fab-bottom-right"
-  style="background-color: #3c8dbc;"
+  <md-button class="md-fab md-primary md-fab-bottom-right admin-bg-common"
   ng-click="vm.showDialogAddProduct($event)">
     <md-icon md-svg-src="images/icons/ic_add_white_18px.svg"></md-icon>
   </md-button>
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 40%;">Name</th>
-        <th style="width: 20%;">Description</th>
-        <th style="width: 20%;">Price</th>
+        <th style="width: 5%;">#</th>
+        <th style="width: 30%;">Book cover</th>
+        <th style="width: 15%;">Book title</th>
+        <th style="width: 10%;">Author</th>
+        <th style="width: 30%;">Description</th>
+        <th style="width: 10%;">Price</th>
       </tr>
     </thead>
     <tbody>

@@ -1,0 +1,40 @@
+<md-dialog style="width: 700px;" ng-init="vm.init()" style="z-index: 1000;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools admin-bg-common">
+        <h2>{{vm.labelAddOrUpdate}} product</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.cancelDialog()" style="opacity: 0.87;">
+          <md-icon md-svg-src="images/icons/ic_close_white_18px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div layout="column" style="margin-top: 20px;">
+        <md-input-container style="margin: 5px 10px;">
+          <label>Name</label>
+          <input ng-model="vm.product.name" ng-disabled="vm.isEditMode"/>
+        </md-input-container>
+        <md-input-container style="margin: 5px 10px;">
+          <label>Description</label>
+          <textarea rows="3" ng-model="vm.product.description" ng-disabled="vm.isEditMode"></textarea>
+        </md-input-container>
+        <md-input-container style="margin: 5px 10px;">
+          <label>Price (USD)</label>
+          <input type="number" ng-model="vm.product.price" ng-disabled="vm.isEditMode"/>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.deleteProduct()" ng-show="vm.isEditMode">
+        Delete
+      </md-button>
+      <md-button class="md-raised md-primary admin-bg-common" ng-click="vm.addOrUpdateProduct()" ng-show="!vm.isEditMode">
+        {{vm.labelAddOrUpdate}}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
